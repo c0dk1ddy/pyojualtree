@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _CONSTEXPRCOMPILING_H
 #define _CONSTEXPRCOMPILING_H
+#define __PYOJUALTREE_INSTRUCTION_ERROR__
 #include <pyojualtree_cpp_wrapper.h>
 
 template <typename T, T L, T I = L - 1>
@@ -11,19 +12,28 @@ constexpr struct __v_t {
 	}
 };
 
-template <typename T, T L, T B = (3*L)+1, typename G = __v_t<T, L>>
-constexpr struct constexprv_t {
-	union {
-		char s[B];
-		G v;
-	};
-	using v_t = G;
+template <typename T, T L, T B = (3*L)+1>
+constexpr struct __s_t {
+	char core[B];
 };
 
-template <typename T, T L, typename G = constexpr_t<T, L>>
-constexpr static inline auto constexprcompiling(G x) {
-	if constexpr (compile(&x.v.core, &x.v)) {
-	
+template <typename T, T L, typename G = __v_t<T, L>, typename E = __s_t<T, L>>
+constexpr struct constexprv_t {
+	union {
+		E s;
+		G v;
+	};
+	constexpr inline G operator()(void) {
+		if constexpr (compile(&this->v.core, &this->v)) {
+		} else {
+			__PYOJUALTREE_INSTRUCTION_ERROR__
+		}
+		return this->v;
 	}
-}
+
+	constexpr inline constexprv_t(E s) {
+		this->s = s;
+	}
+};
+
 #endif
