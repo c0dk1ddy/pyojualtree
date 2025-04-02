@@ -67,8 +67,8 @@ typedef struct {
 } writing_unit;
 
 inline fastcall writing_unit get_write_unit(char x, writing_unit retv) {
-	static bool ischarptr[256];
-	static char stringptr[256];
+	static bool ischarptr[256] = {[};
+	static char stringptr[256] = {};
 	retv = {.stringptr = stringptr[x], .ischarptr = ischarptr[x]};
 	return ret.v;
 }
