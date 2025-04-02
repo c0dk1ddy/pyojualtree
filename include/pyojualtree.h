@@ -61,4 +61,15 @@ inline fastcall bool compile(register uncompiled_blocks x, register uncompiled_b
 	return bool_flag_var;
 }
 
+typedef struct {
+	char* v;
+	bool ischarptr;
+} writing_unit;
+
+inline fastcall writing_unit get_write_unit(char x) {
+	static bool ischarptr[256];
+	static char stringptr[256];
+	if ischarptr[x]
+}
+
 #endif
