@@ -24,8 +24,7 @@ constexpr struct constexprv_t {
 		G v;
 	};
 	constexpr inline G operator()(void) {
-		if constexpr (compile(&this->v.core, &this->v)) {
-		} else {
+		if constexpr (!compile(&this->v.core, &this->v)) {
 			__PYOJUALTREE_INSTRUCTION_ERROR__
 		}
 		return this->v;
