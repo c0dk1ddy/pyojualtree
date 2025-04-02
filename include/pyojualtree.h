@@ -50,7 +50,7 @@ __Noreturn inline fastcall void run(register blocks pyojualtree_point, register 
 
 inline fastcall bool compile(register uncompiled_blocks x, register uncompiled_blocks y, register bool bool_flag_var) {
 	for (bool_flag_var = true; x != y; y--) {
-		if alu(&y->instruction, bool_flag_var) {
+		if (alu(&y->instruction, bool_flag_var)) {
 			y->edge_of_y = x[y->edge_of_y]; //[ TODO :: 1 ] need to find it use simd
 			y->edge_of_n = x[y->edge_of_n];
 		} else {
@@ -66,10 +66,11 @@ typedef struct {
 	bool ischarptr;
 } writing_unit;
 
-inline fastcall writing_unit get_write_unit(char x) {
+inline fastcall writing_unit get_write_unit(char x, writing_unit retv) {
 	static bool ischarptr[256];
 	static char stringptr[256];
-	if ischarptr[x]
+	retv = {.stringptr = stringptr[x], .ischarptr = ischarptr[x]};
+	return ret.v;
 }
 
 #endif
