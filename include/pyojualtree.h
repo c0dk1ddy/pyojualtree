@@ -1,6 +1,7 @@
 #pragma once
 #ifndef _PYOJUALTREE_H
 #include <mybool.h>
+#include <myfastcall.h>
 #define _PYOJUALTREE_H(cmd, compile_flag) inline bool alu(register autolike cmd, register bool compile_flag)
 #define __PYOJUALTREE_END__ pyojualtree_ending()
 #define __MY_EMPTY__
@@ -28,22 +29,26 @@ _Noreturn inline void __pyjualtree_exit__(void) {
 	exit(0);
 }
 
-inline __attribute__((regparm(3))) bool pyojualtree_ending(register bool bool_flag_var) {
+inline fastcall bool pyojualtree_ending(register bool bool_flag_var) {
 	__pyojualtree_exit__();
 	return bool_flag_var;
 }
 
-inline __attribute__((regparm(3))) blocks cycling(register blocks cmd, register bool bool_flag_var) {
+inline fastcall blocks cycling(register blocks cmd, register bool bool_flag_var) {
 	bool_flag_var = false;
 	cmd = alu(cmd->jmpnt, bool_flag_var)?cmd->y:cmd->n;
 	return cmd;
 }
 
-inline void cpu(register blocks pyojualtree_point, register bool bool_flag_var) {
+inline fastcall void cpu(register blocks pyojualtree_point, register bool bool_flag_var) {
 	while (true) pyojualtree_point = cycling(pyojualtree_point, bool_flag_var);
 }
 
-inline bool compile(register uncompiled_blocks x, register uncompiled_blocks y, register bool bool_flag_var) {
+__Noreturn inline fastcall void run(register blocks pyojualtree_point, register bool bool_flag_var) {
+	run(pyojualtree_point, bool_flag_var);
+}
+
+inline fastcall bool compile(register uncompiled_blocks x, register uncompiled_blocks y, register bool bool_flag_var) {
 	for (bool_flag_var = true; x != y; y--) {
 		if alu(&y->instruction, bool_flag_var) {
 			y->edge_of_y = x[y->edge_of_y]; //[ TODO :: 1 ] need to find it use simd
